@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electoral Candidates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #8b2332;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .note {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .voting-status {
+            color: #ff3333;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin: 20px 0;
+        }
+
+        .candidates-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .candidate-card {
+            width: 220px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-right: 1px solid #eee;
+        }
+
+        .candidate-card:last-child {
+            border-right: none;
+        }
+
+        .candidate-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .photo-1 {
+            background-color: #2563eb;
+            /* Blue */
+        }
+
+        .photo-2 {
+            background-color: #f97316;
+            /* Orange */
+        }
+
+        .photo-3 {
+            background-color: #9ca3af;
+            /* Gray */
+        }
+
+        .photo-4 {
+            background-color: #ec4899;
+            /* Pink */
+        }
+
+        .candidate-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .candidate-dept {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .view-btn,
+        .vote-btn {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 8px 0;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .view-btn {
+            background-color: #f3a261;
+            color: white;
+        }
+
+        .vote-btn {
+            background-color: #22c55e;
+            color: white;
+        }
+
+        /* Error page styles */
+        .error-container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .error-icon {
+            width: 70px;
+            height: 70px;
+            background-color: #ffeeee;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .error-icon span {
+            color: #ff3333;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .error-title {
+            color: #ff3333;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .error-message {
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .error-note {
+            color: #777;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .home-btn {
+            background-color: #3861fb;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Verification Styles */
+        .verification-container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .lock-icon {
+            width: 70px;
+            height: 70px;
+            background-color: #e6f0ff;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: #4285f4;
+        }
+
+        .verification-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .verification-input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .verify-btn {
+            background-color: #4285f4;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .verify-btn:hover {
+            background-color: #357ae8;
+        }
+
+        .terms-text {
+            font-size: 0.8em;
+            color: #777;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Verification Panel -->
+    <div id="verificationPanel" class="verification-container">
+        <div class="lock-icon">🔒</div>
+        <h2 class="verification-title">Voter ID Verification</h2>
+        <p>Please enter your 12-digit voter identification number</p>
+        <input type="text" id="voterIdInput" class="verification-input" placeholder="XXXX XXXX XXXX" maxlength="12">
+        <button class="verify-btn" onclick="verifyVoter()">Verify Identity</button>
+        <p class="terms-text">By proceeding, you agree to the voter verification terms and privacy policy</p>
+    </div>
+
+    <!-- Voting Panel -->
+    <div id="votingPanel" class="container">
+        <h1>Electoral Candidates</h1>
+        <p class="subtitle">Here are 2025 LokSabha Candidates</p>
+        <p class="note">These candidates have been screened by the Election Commision Of India</p>
+        <p class="voting-status">VOTING IS OPEN!!!</p>
+        <hr>
+
+        <div class="candidates-grid">
+            <div class="candidate-card">
+                <div class="candidate-photo photo-1">Narendra Modi</div>
+                <div class="candidate-name">Narendra Modi</div>
+                <div class="candidate-dept">Bhartiya Janata Party</div>
+                <a href="#" class="view-btn">View Details</a>
+                <a href="#" class="vote-btn" onclick="castVote('Narendra MOdi')">VOTE</a>
+            </div>
+
+            <div class="candidate-card">
+                <div class="candidate-photo photo-2">Rahul Gandhi</div>
+                <div class="candidate-name">Rahul Gandhi</div>
+                <div class="candidate-dept">Indian National Congress</div>
+                <a href="#" class="view-btn">View Details</a>
+                <a href="#" class="vote-btn" onclick="castVote('Rahul Gandhi')">VOTE</a>
+            </div>
+
+            <div class="candidate-card">
+                <div class="candidate-photo photo-3">Arvind Kejriwal</div>
+                <div class="candidate-name">Arvind Kejriwal</div>
+                <div class="candidate-dept">Aam Aadmi Party</div>
+                <a href="#" class="view-btn">View Details</a>
+                <a href="#" class="vote-btn" onclick="castVote('Arvind Kejriwal')">VOTE</a>
+            </div>
+
+            <div class="candidate-card">
+                <div class="candidate-photo photo-4">M K Stalin</div>
+                <div class="candidate-name">M K Stalin</div>
+                <div class="candidate-dept">Dravida Munnetra Kazhagam</div>
+                <a href="#" class="view-btn">View Details</a>
+                <a href="#" class="vote-btn" onclick="castVote('M K Stalin')">VOTE</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeout Error Page -->
+    <div id="timeoutPage" class="error-container hidden">
+        <div class="error-icon">
+            <span>!</span>
+        </div>
+        <h2 class="error-title">Oops! Voting Time is Over</h2>
+        <p class="error-message">You did not vote within the allotted time.</p>
+        <p class="error-note">Please contact your administrator if you believe this is an error.</p>
+        <a href="#" class="home-btn" onclick="resetVoting()">Return Home</a>
+    </div>
+
+    <script>
+        let votingTimeout;
+
+        // Function to verify voter ID
+        function verifyVoter() {
+            const voterId = document.getElementById('voterIdInput').value;
+
+            // Simple validation for 12 digits
+            if (voterId.length === 12 && /^\d+$/.test(voterId)) {
+                // Hide verification panel and show voting panel
+                document.getElementById('verificationPanel').classList.add('hidden');
+                document.getElementById('votingPanel').classList.remove('hidden');
+
+                // Start the voting timeout
+                startVotingTimer();
+            } else {
+                alert("Please enter a valid 12-digit voter ID number");
+            }
+        }
+
+        // Function to start voting timer
+        function startVotingTimer() {
+            // Set timeout for 30 seconds
+            votingTimeout = setTimeout(function () {
+                showTimeoutPage();
+            }, 30000); // 30 seconds
+        }
+
+        // Function to handle voting
+        function castVote(candidate) {
+            // Clear the timeout since user voted
+            clearTimeout(votingTimeout);
+
+            // Corrected string interpolation
+            alert(`Thank you for voting for ${candidate}!`);
+
+            // After voting, return to verification page for next voter
+            setTimeout(function () {
+                document.getElementById('votingPanel').classList.add('hidden');
+                document.getElementById('verificationPanel').classList.remove('hidden');
+                document.getElementById('voterIdInput').value = '';
+            }, 2000);
+        }
+
+        // Function to show timeout page
+        function showTimeoutPage() {
+            document.getElementById('votingPanel').classList.add('hidden');
+            document.getElementById('timeoutPage').classList.remove('hidden');
+        }
+
+        // Function to reset and go back to verification page
+        function resetVoting() {
+            document.getElementById('timeoutPage').classList.add('hidden');
+            document.getElementById('verificationPanel').classList.remove('hidden');
+            document.getElementById('voterIdInput').value = '';
+        }
+    </script>
+</body>
+
+</html>
