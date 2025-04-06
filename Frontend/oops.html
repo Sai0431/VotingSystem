@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Closed</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #f0f7ff, #f5f5f5);
+            padding: 1.5rem;
+        }
+
+        .container {
+            background-color: white;
+            width: 100%;
+            max-width: 28rem;
+            margin: 0 auto;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .icon-background {
+            background-color: #fee2e2;
+            padding: 0.75rem;
+            border-radius: 9999px;
+        }
+
+        .alert-icon {
+            color: #ef4444;
+        }
+
+        h1 {
+            color: #dc2626;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            color: #374151;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .error-message {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .button {
+            background-color: #2563eb;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="icon-container">
+            <div class="icon-background">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="alert-icon">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+        </div>
+
+        <h1>Oops! Voting Time is Over</h1>
+
+        <p class="message">You did not vote within the allotted time.</p>
+
+        <div class="footer">
+            <p class="error-message">Please contact your administrator if you believe this is an error.</p>
+            <button class="button" id="returnHomeBtn">Return Home</button>
+        </div>
+    </div>
+
+    <script>
+        // Add click event listener to the Return Home button
+        document.getElementById('returnHomeBtn').addEventListener('click', function () {
+            // Replace this with the actual home page URL or navigation logic
+            window.location.href = '/';
+        });
+    </script>
+</body>
+
+</html>

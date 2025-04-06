@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electoral Candidates</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1024px;
+            background-color: white;
+            padding: 24px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e5e5;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #991b1b;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .header p.italic {
+            font-style: italic;
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .header p.voting-open {
+            color: #dc2626;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .candidates-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .candidate {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 16px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .candidate-image {
+            width: 112px;
+            height: 112px;
+            border-radius: 50%;
+            overflow: hidden;
+            border-width: 4px;
+            border-style: solid;
+            margin-bottom: 12px;
+        }
+
+        .candidate-info {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .candidate-info h3 {
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .candidate-info p {
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .candidate-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .btn {
+            width: 128px;
+            padding: 4px 16px;
+            color: white;
+            font-weight: 500;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 8px;
+        }
+
+        .btn-details {
+            background-color: #fb923c;
+        }
+
+        .btn-details:hover {
+            background-color: #f97316;
+        }
+
+        .btn-vote {
+            background-color: #16a34a;
+        }
+
+        .btn-vote:hover {
+            background-color: #15803d;
+        }
+
+        @media (min-width: 768px) {
+            .candidates-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .candidate {
+                border-right: 1px solid #e5e5e5;
+            }
+
+            .candidate:nth-child(2n) {
+                border-right: none;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .candidates-grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+
+            .candidate {
+                border-right: 1px solid #e5e5e5;
+            }
+
+            .candidate:nth-child(2n) {
+                border-right: 1px solid #e5e5e5;
+            }
+
+            .candidate:nth-child(4n) {
+                border-right: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Electoral Candidates</h2>
+            <p>Here are the 2023 JIT Students union presidential candidates</p>
+            <p class="italic">These candidates have been screened by the JIT electoral board</p>
+            <p class="voting-open">VOTING IS OPEN!!!</p>
+        </div>
+
+        <div class="candidates-grid" id="candidates-container">
+            <!-- Candidates will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        // Candidates data
+        const candidates = [
+            {
+                id: 1,
+                name: "Chijioke Okonkwo",
+                department: "Civil Engineering",
+                image: "/api/placeholder/150/150",
+                borderColor: "#2563eb" // blue-600
+            },
+            {
+                id: 2,
+                name: "Aisha Mohammed",
+                department: "Fisheries and Aquaculture",
+                image: "/api/placeholder/150/150",
+                borderColor: "#fb923c" // orange-400
+            },
+            {
+                id: 3,
+                name: "Olumide Adeyemi",
+                department: "Architecture",
+                image: "/api/placeholder/150/150",
+                borderColor: "#9ca3af" // gray-400
+            },
+            {
+                id: 4,
+                name: "Ifeoma Onyekachi",
+                department: "Software Engineering",
+                image: "/api/placeholder/150/150",
+                borderColor: "#f9a8d4" // pink-300
+            }
+        ];
+
+        // Function to render candidates
+        function renderCandidates() {
+            const container = document.getElementById('candidates-container');
+
+            candidates.forEach(candidate => {
+                const candidateElement = document.createElement('div');
+                candidateElement.className = 'candidate';
+
+                candidateElement.innerHTML = `
+                    <div class="candidate-image" style="border-color: ${candidate.borderColor}">
+                        <img src="${candidate.image}" alt="${candidate.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="candidate-info">
+                        <h3>${candidate.name}</h3>
+                        <p>${candidate.department}</p>
+                    </div>
+                    <div class="candidate-actions">
+                        <button class="btn btn-details">View Details</button>
+                        <button class="btn btn-vote" data-id="${candidate.id}">VOTE</button>
+                    </div>
+                `;
+
+                container.appendChild(candidateElement);
+            });
+
+            // Add event listeners for voting
+            document.querySelectorAll('.btn-vote').forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    const candidateId = e.target.getAttribute('data-id');
+                    castVote(candidateId);
+
+                    // Make a POST request to the backend to cast a vote
+                    fetch('http://localhost:5000/vote/vote', { // Update with full backend URL
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ candidateId }),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.error) {
+                                alert(`Error: ${data.error}`);
+                            } else {
+                                alert(`Vote cast successfully for candidate ID: ${candidateId}`);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            alert('Failed to cast vote. Please try again.');
+                        });
+                });
+            });
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', renderCandidates);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voter ID Verification</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, #ebf4ff, #e0e8f9);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .container {
+      background-color: white;
+      width: 100%;
+      max-width: 28rem;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      transition: all 0.5s;
+    }
+
+    .success-animation {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 3px #4ade80;
+    }
+
+    .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .icon-bg {
+      background-color: #dbeafe;
+      padding: 0.75rem;
+      border-radius: 9999px;
+    }
+
+    .icon {
+      width: 28px;
+      height: 28px;
+      color: #2563eb;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+
+    .description {
+      color: #6b7280;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-container {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1.125rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
+
+    .input-error {
+      border-color: #fca5a5;
+      background-color: #fef2f2;
+    }
+
+    .input-counter {
+      position: absolute;
+      right: 0.75rem;
+      top: 0.875rem;
+      height: 1.25rem;
+      width: 1.25rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .counter-complete {
+      background-color: #22c55e;
+    }
+
+    .counter-incomplete {
+      background-color: #d1d5db;
+    }
+
+    .counter-text {
+      color: white;
+      font-size: 0.75rem;
+    }
+
+    .alert {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .alert-error {
+      background-color: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .alert-success {
+      background-color: #f0fdf4;
+      color: #15803d;
+    }
+
+    .alert-icon {
+      margin-right: 0.5rem;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+    }
+
+    .alert-text {
+      font-size: 0.875rem;
+    }
+
+    button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #2563eb;
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      transition: 0.3s;
+      border: none;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #1d4ed8;
+    }
+
+    button:disabled {
+      background-color: #60a5fa;
+      cursor: not-allowed;
+    }
+
+    .button-text {
+      display: flex;
+      align-items: center;
+    }
+
+    .button-icon {
+      width: 18px;
+      height: 18px;
+      margin-left: 0.25rem;
+    }
+
+    .button-check-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 0.5rem;
+    }
+
+    .spinner {
+      animation: spin 1s linear infinite;
+      height: 1.25rem;
+      width: 1.25rem;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .footer-text {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="verification-container">
+    <div class="icon-container">
+      <div class="icon-bg">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+    </div>
+
+    <h1>Voter ID Verification</h1>
+    <p class="description">Please enter your 12-digit voter identification number</p>
+
+    <div class="input-container">
+      <input type="text" id="voterIDNumber" placeholder="XXXX XXXX XXXX" maxlength="14" />
+      <div id="input-counter" class="input-counter counter-incomplete" style="display: none;">
+        <span class="counter-text">0</span>
+      </div>
+    </div>
+
+    <div id="error-alert" class="alert alert-error" style="display: none;">
+      <svg class="alert-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <p class="alert-text" id="error-message"></p>
+    </div>
+
+    <div id="success-alert" class="alert alert-success" style="display: none;">
+      <svg class="alert-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <p class="alert-text">Authentication Successful! Redirecting...</p>
+    </div>
+
+    <button id="verify-button" disabled>
+      <span class="button-text">
+        Verify Identity
+        <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </span>
+    </button>
+
+    <p class="footer-text">
+      By proceeding, you agree to the voter verification terms and privacy policy
+    </p>
+  </div>
+
+  <script>
+    // DOM elements
+    const container = document.getElementById('verification-container');
+    const voterIDInput = document.getElementById('voterIDNumber');
+    const inputCounter = document.getElementById('input-counter');
+    const counterText = inputCounter.querySelector('.counter-text');
+    const verifyButton = document.getElementById('verify-button');
+    const errorAlert = document.getElementById('error-alert');
+    const errorMessage = document.getElementById('error-message');
+    const successAlert = document.getElementById('success-alert');
+
+    // State variables
+    let voterID = '';
+    let isLoading = false;
+    let animateSuccess = false;
+
+    // Format voter ID with spaces
+    function formatVoterID(input) {
+      return input
+        .replace(/\s/g, '')
+        .replace(/(\d{4})/g, '$1 ')
+        .trim();
+    }
+
+    // Update UI based on current voterID
+    function updateUI() {
+      const rawVoterID = voterID.replace(/\s/g, '');
+      const isComplete = rawVoterID.length === 12;
+
+      // Show/hide counter
+      if (rawVoterID.length > 0 && !animateSuccess && !errorAlert.style.display === 'flex') {
+        inputCounter.style.display = 'flex';
+        counterText.textContent = rawVoterID.length;
+
+        if (isComplete) {
+          inputCounter.classList.add('counter-complete');
+          inputCounter.classList.remove('counter-incomplete');
+        } else {
+          inputCounter.classList.add('counter-incomplete');
+          inputCounter.classList.remove('counter-complete');
+        }
+      } else {
+        inputCounter.style.display = 'none';
+      }
+
+      // Enable/disable button
+      verifyButton.disabled = isLoading || animateSuccess || rawVoterID.length !== 12;
+    }
+
+    // Set error message
+    function setError(message) {
+      errorMessage.textContent = message;
+      errorAlert.style.display = 'flex';
+      voterIDInput.classList.add('input-error');
+    }
+
+    // Clear error message
+    function clearError() {
+      errorAlert.style.display = 'none';
+      voterIDInput.classList.remove('input-error');
+    }
+
+    // Show success state
+    function showSuccess() {
+      animateSuccess = true;
+      successAlert.style.display = 'flex';
+      container.classList.add('success-animation');
+
+      // Update button
+      verifyButton.innerHTML = `
+        <span class="button-text">
+          <svg class="button-check-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          Authenticated
+        </span>
+      `;
+
+      // Disable input
+      voterIDInput.disabled = true;
+      inputCounter.style.display = 'none';
+    }
+
+    // Show loading state
+    function showLoading() {
+      isLoading = true;
+      verifyButton.innerHTML = `
+        <svg class="spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      `;
+      updateUI();
+    }
+
+    // Reset loading state
+    function resetLoading() {
+      isLoading = false;
+      verifyButton.innerHTML = `
+        <span class="button-text">
+          Verify Identity
+          <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </span>
+      `;
+      updateUI();
+    }
+
+    // Authentication function
+    function authenticate() {
+      clearError();
+      showLoading();
+
+      // Simulate network delay
+      setTimeout(() => {
+        const rawVoterID = voterID.replace(/\s/g, '');
+
+        // Validate Voter ID Format (Only numbers, 12 digits)
+        if (!/^\d{12}$/.test(rawVoterID)) {
+          setError("Invalid Voter ID format! Must be 12 digits.");
+          resetLoading();
+          return;
+        }
+
+        // Make a POST request to the backend
+        fetch('/vote/vote', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ voterId: rawVoterID }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              setError(data.error);
+              resetLoading();
+            } else {
+              showSuccess();
+              setTimeout(() => {
+                window.location.href = 'votepanel.html';
+              }, 1500);
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            setError('Failed to authenticate. Please try again.');
+            resetLoading();
+          });
+      }, 800);
+    }
+
+    // Handle input changes
+    voterIDInput.addEventListener('input', (e) => {
+      // Only allow digits
+      const digitsOnly = e.target.value.replace(/[^0-9]/g, '');
+
+      // Format with spaces
+      voterID = formatVoterID(digitsOnly);
+      voterIDInput.value = voterID;
+
+      // Clear error if present
+      if (errorAlert.style.display === 'flex') {
+        clearError();
+      }
+
+      updateUI();
+    });
+
+    // Handle button click
+    verifyButton.addEventListener('click', authenticate);
+
+    // Initialize UI
+    updateUI();
+  </script>
+</body>
+
+</html>
