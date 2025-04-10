@@ -293,7 +293,7 @@
                 <div class="candidate-name">Rahul Gandhi</div>
                 <div class="candidate-dept">Indian National Congress</div>
                 <a href="#" class="view-btn">View Details</a>
-                <a href="#" class="vote-btn" onclick="castVote('Rahul Gandhi')">VOTE</a>
+                <a href="#" class="vote-btn" onclick="castVote('Rahul Gndhi')">VOTE</a>
             </div>
 
             <div class="candidate-card">
@@ -322,6 +322,22 @@
         <h2 class="error-title">Oops! Voting Time is Over</h2>
         <p class="error-message">You did not vote within the allotted time.</p>
         <p class="error-note">Please contact your administrator if you believe this is an error.</p>
+        <a href="#" class="home-btn" onclick="resetVoting()">Return Home</a>
+    </div>
+
+    <!-- Thank You Page -->
+    <div id="thankYouPage" class="error-container hidden">
+        <div class="error-icon" style="background-color: #dcfce7;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon"
+                style="color: #16a34a;">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+        </div>
+        <h2 class="error-title" style="color: #16a34a;">Thank You for Voting!</h2>
+        <p class="error-message">Your vote has been successfully recorded.</p>
+        <p class="error-note">Your participation helps make a difference in our community.</p>
         <a href="#" class="home-btn" onclick="resetVoting()">Return Home</a>
     </div>
 
@@ -358,15 +374,20 @@
             // Clear the timeout since user voted
             clearTimeout(votingTimeout);
 
-            // Corrected string interpolation
+            // You can implement actual voting logic here
             alert(`Thank you for voting for ${candidate}!`);
+
+            // Show the Thank You page
+            document.getElementById('votingPanel').classList.add('hidden');
+            document.getElementById('thankYouPage').classList.remove('hidden');
 
             // After voting, return to verification page for next voter
             setTimeout(function () {
+                document.getElementById('thankYouPage').classList.add('hidden');
                 document.getElementById('votingPanel').classList.add('hidden');
                 document.getElementById('verificationPanel').classList.remove('hidden');
                 document.getElementById('voterIdInput').value = '';
-            }, 2000);
+            }, 10000);
         }
 
         // Function to show timeout page
